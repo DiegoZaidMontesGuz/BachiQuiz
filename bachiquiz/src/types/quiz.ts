@@ -4,7 +4,8 @@ export type Trait =
     | "loyalty"
     | "playfulness"
     | "calm"
-    | "mischief";
+    | "mischief"
+    | "curiosity";
 
 export type AnswerOption = {
     text: string;

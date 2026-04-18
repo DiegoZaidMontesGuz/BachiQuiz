@@ -9,6 +9,7 @@ export function createEmptyScores(): Record<Trait, number> {
         playfulness: 0,
         calm: 0,
         mischief: 0,
+        curiosity: 0,
     };
 }
 

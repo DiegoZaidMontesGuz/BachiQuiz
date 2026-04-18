@@ -11,6 +11,7 @@ export const characterProfile: BachiProfile[] = [
             playfulness: 8,
             calm: 2,
             mischief: 3,
+            curiosity: 0
         },
         description: "Energetic and cheerful"
     },
@@ -24,6 +25,7 @@ export const characterProfile: BachiProfile[] = [
             playfulness: 4,
             calm: 10,
             mischief: 1,
+            curiosity: 0
         },
         description: "Steady and calm"
     },

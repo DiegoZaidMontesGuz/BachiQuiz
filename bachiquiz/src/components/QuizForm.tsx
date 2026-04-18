@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { questions } from "@/data/questions";
 import ResultCard from "./ResultCard";
 
@@ -10,9 +10,15 @@ export default function QuizForm() {
   const [answers, setAnswers] = useState<Record<string, number>>({});
   const [result, setResult] = useState<any>(null);
   const [loading, setLoading] = useState(false);
+  const [imageLoaded, setImageLoaded] = useState(false);
 
   const question = questions[currentQuestion];
   const selectAnswer = answers[question.id]
+  
+
+useEffect(() => {
+  setImageLoaded(false);
+}, [currentQuestion]);
 
   function handleSelect(optionIndex: number) {
     setAnswers((prev) => ({
@@ -76,42 +82,61 @@ export default function QuizForm() {
   }
 
   return (
-    <div>
+    <div style={{display: "flex", flexDirection: "column"}}>
         <h3 className="text-2xl md:text-3xl font-bold leading-snug text-gray-800 mb-6 ">
            {currentQuestion + 1} / {questions.length}
         </h3>
 
-        
-
+      
         <h2 className="text-2xl md:text-3xl font-bold leading-snug text-gray-800 mb-6 ">{question.text} </h2>
 
-        {question.options.map((opt, index) => (
-        <label
-          key={index}
-          className={`block cursor-pointer p-4 transition-all ${
-            selectAnswer === index
-              ? "border-blue-600 bg-red-200 shadow-sm"
-              : "border-red-300 bg-red hover:border-red-400 hover:bg-red-50"
-         }`}
-        >
-        <input
-          type="radio"
-          name={`question-${question.id}`}
-          checked={selectAnswer === index}
-          onChange={() => handleSelect(index)}
-          className="hidden"
-        />
+        {question.image && (
+            <div style={{marginBottom: "1rem", order: 3}} >
+                <Image 
+                    src = {question.image.src}
+                    alt = {question.text}
+                    width={500}
+                    height={500}
+                    priority
+                    onLoad={()=>(setImageLoaded(true))}
+                    style={{borderRadius: "12px", objectFit: "cover"}}
+                    className="object-cover"
+                />
+            </div>
+        )}
 
-        <span className="text-base font-medium text-gray-800">
-          {opt.text}
-        </span>
-        </label>
-      ))}
+        <div style={{order: 1}}>
+
+          {question.options.map((opt, index) => (
+          <label
+            key={index}
+            className={`block cursor-pointer p-4 transition-all ${
+              selectAnswer === index
+                ? "border-blue-600 bg-red-200 shadow-sm"
+                : "border-red-300 bg-red hover:border-red-400 hover:bg-red-50"
+          }`}
+          >
+          <input
+            type="radio"
+            name={`question-${question.id}`}
+            checked={selectAnswer === index}
+            onChange={() => handleSelect(index)}
+            className="hidden"
+          />
+
+          <span className="text-base font-medium text-gray-800">
+            {opt.text}
+          </span>
+          </label>
+        ))}
+
+        </div>
+        
       
         <button
             onClick={handleNext}
             disabled={selectAnswer == undefined || loading}
-            style={{marginTop: "1rem"}}
+            style={{marginTop: "1rem", order: 2}}
             className={`block cursor-pointer p-4 transition-all ${
               "border-red-300 bg-red hover:border-red-400 hover:bg-red-50"
          }`}
@@ -122,19 +147,11 @@ export default function QuizForm() {
                 : "Next"}
         </button>
 
+      
+
       {loading && <p>Calculating...</p>}
-      {question.image && (
-            <div style={{marginBottom: "1rem"}} >
-                <Image 
-                    src = {question.image.src}
-                    alt = {question.text}
-                    width={500}
-                    height={500}
-                    style={{borderRadius: "12px", objectFit: "cover"}}
-                    className="object-cover"
-                />
-            </div>
-        )}
+
+      
     </div>
     
   );
