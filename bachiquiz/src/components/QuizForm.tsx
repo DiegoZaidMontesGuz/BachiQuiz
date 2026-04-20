@@ -12,6 +12,7 @@ export default function QuizForm() {
   const [loading, setLoading] = useState(false);
   const [imageLoaded, setImageLoaded] = useState(false);
 
+  const [removeOptions, setRemovedOptions] = useState<Record<number, number[]>>({});
   const question = questions[currentQuestion];
   const selectAnswer = answers[question.id]
   
@@ -21,6 +22,17 @@ useEffect(() => {
 }, [currentQuestion]);
 
   function handleSelect(optionIndex: number) {
+
+    const isFakeQuestion = question.id === 16;
+
+    if(isFakeQuestion && optionIndex === 0){
+      setRemovedOptions((prev) => ({
+        ...prev,
+        [question.id]: [...(prev[question.id] || []), optionIndex],
+      }));
+      return;
+    }
+
     setAnswers((prev) => ({
       ...prev,
       [question.id]: optionIndex,
@@ -107,7 +119,12 @@ useEffect(() => {
 
         <div style={{order: 1}}>
 
-          {question.options.map((opt, index) => (
+          {question.options.map((opt, index) => {
+
+          const isRemoved = removeOptions[question.id]?.includes(index);
+          if(isRemoved) return null;
+
+          return(
           <label
             key={index}
             className={`block cursor-pointer p-4 transition-all ${
@@ -128,7 +145,8 @@ useEffect(() => {
             {opt.text}
           </span>
           </label>
-        ))}
+          );
+        })}
 
         </div>
         

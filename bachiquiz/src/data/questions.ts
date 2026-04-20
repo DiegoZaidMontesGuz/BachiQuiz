@@ -215,6 +215,19 @@ export const questions: Question[] = [
             alt: "Hokuto"
         }
     },
-    
+    {
+        id: 16,
+        text: "Is Shiba a fraud?",
+        specialMode: "rejectWrongAnswer",
+        options:[
+            {text: "No", effects: {loyalty: 2, emotional: 2}},
+            {text: "Yes", effects: {mischief: 2}},
+        ],
+        
+        image:{
+            src :"/images/shiba.webp",
+            alt: "Shiba"
+        }
+    },
 
 ];

@@ -1,3 +1,5 @@
+import { text } from "stream/consumers";
+
 export type Trait =
     | "bravery"
     | "emotional"
@@ -7,6 +9,8 @@ export type Trait =
     | "mischief"
     | "curiosity";
 
+export type specialMode = "rejectWrongAnswer";
+
 export type AnswerOption = {
     text: string;
     effects: Partial<Record<Trait, number>>;
@@ -15,6 +19,8 @@ export type AnswerOption = {
 export type Question = {
     id: number;
     text: string;
+    specialMode?: specialMode;
+    rejectOptionIndex?: number;
     image?: {
         src: string;
         alt: string;
@@ -28,3 +34,15 @@ export type BachiProfile = {
     traits: Record<Trait, number>;
     description: string;
 };
+
+// export const defaultSettings: Question = {
+//     id: 1,
+//     text: '',
+//     specialMode: "nomalMode",
+//     image:{
+//         src: '',
+//         alt: ''
+//     },
+//     options: [{text: "", effects: {}},   ],
+
+// }
