@@ -109,7 +109,7 @@ useEffect(() => {
                     alt = {question.text}
                     width={500}
                     height={500}
-                    priority
+                    
                     onLoad={()=>(setImageLoaded(true))}
                     style={{borderRadius: "12px", objectFit: "cover"}}
                     className="object-cover"

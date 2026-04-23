@@ -229,5 +229,63 @@ export const questions: Question[] = [
             alt: "Shiba"
         }
     },
+    {
+        id: 17,
+        text: "My favorite holiday is",
+        options:[
+            {text: "Christmas", effects: {loyalty: 2, emotional: 2}},
+            {text: "Halloween", effects: {mischief: 2, playfulness: 2}},
+            {text: "New year's", effects: {emotional: 2, playfulness: 1}},
+            {text: "Labor day", effects: {bravery: 2, emotional: 1}},
+        ],
+        
+        image:{
+            src :"/images/toto.webp",
+            alt: "Toto"
+        }
+    },
+    {
+        id: 18,
+        text: "I would rather reincarnate as a..",
+        options:[
+            {text: "Worm", effects: {calm: 2, curiosity: 1}},
+            {text: "Vulture", effects: {mischief: 1, playfulness: 1}},
+            {text: "Rat", effects: {curiosity: 2, bravery: 1}},
+            {text: "Mosquito", effects: {mischief: 3}},
+        ],
+        
+        image:{
+            src :"/images/yura.webp",
+            alt: "Yura"
+        }
+    },
+    {
+        id: 19,
+        text: "I would like to go on a date with...",
+        options:[
+            {text: "Chairman Mao Ze Dong", effects: {loyalty: 2, curiosity: 1}},
+            {text: "George Bush", effects: {calm: 1, loyalty: 1}},
+            {text: "Margaret Thatcher", effects: {loyalty: 2, playfulness:1}},
+            {text: "Kuregumo", effects: {mischief: 2, playfulness:1}},
+        ],
+        
+        image:{
+            src :"/images/chiaki.webp",
+            alt: "Chiaki"
+        }
+    },
+    {
+        id: 20,
+        text: "Are you a good person?",
+        options:[
+            {text: "Yes", effects: {loyalty: 2, bravery: 1}},
+            {text: "No", effects: {mischief:2, playfulness: 1}},
+        ],
+        
+        image:{
+            src :"/images/akemura.webp",
+            alt: "Akamura"
+        }
+    },
 
 ];

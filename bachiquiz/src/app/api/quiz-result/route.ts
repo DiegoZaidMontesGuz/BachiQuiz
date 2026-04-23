@@ -6,7 +6,7 @@ export async function POST(req: NextRequest) {
     const result = calculatedResult(body.answers);
 
     return NextResponse.json({
-        pokemon :result,
+        character :result,
         traits: body.answers,
     });
 }

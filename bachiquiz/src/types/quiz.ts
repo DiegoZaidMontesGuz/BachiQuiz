@@ -32,7 +32,11 @@ export type BachiProfile = {
     id: number;
     name: string;
     traits: Record<Trait, number>;
-    description: string;
+    description?: string;
+    image?: {
+        src: string;
+        alt: string;
+    };
 };
 
 // export const defaultSettings: Question = {
