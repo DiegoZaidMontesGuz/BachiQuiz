@@ -6,10 +6,10 @@ export const questions: Question[] = [
         id: 1,
         text: "How do you aproach a challenge?",
         options: [
-            {text: "Jump Right in", effects: {bravery: 2, mischief: 2}},
+            {text: "Jump right in", effects: {bravery: 2, mischief: 2}},
             {text: "Think it through", effects: { emotional: 2, calm: 1, curiosity: 2}},
             {text: "Ask a friend for help", effects: { loyalty: 2, playfulness: 1, curiosity: 2}},
-            {text: "wait and observe", effects: { calm: 2, mischief: 1, curiosity: 2}},
+            {text: "Wait and observe", effects: { calm: 2, mischief: 1, curiosity: 2}},
         ],
         image:{
             src: "/images/chihiro.webp",
@@ -23,7 +23,7 @@ export const questions: Question[] = [
         options: [
             {text: "Strongly agree", effects: {calm: 2, loyalty: 1, curiosity: 1}},
             {text: "Agree", effects: { calm: 1, emotional: 1}},
-            {text: "disagree", effects: { bravery: 1, playfulness: 1}},
+            {text: "Disagree", effects: { bravery: 1, playfulness: 1}},
             {text: "Strongly disagree", effects: { bravery: 2, mischief:1}},
         ],
         image:{
@@ -95,7 +95,7 @@ export const questions: Question[] = [
             {text: "A confortable aparment in a big city", effects: {calm: 2, bravery: 1, mischief:1, curiosity: 1}},
             {text: "A big house in the suburbs", effects: { mischief: 1, playfulness: 1}},
             {text: "A house in a nice rural town", effects: {  playfulness: 2}},
-            {text: "A big mansion with a big garden", effects: { calm: 2, emotional: 1}},
+            {text: "A mansion with a big garden", effects: { calm: 2, emotional: 1}},
         ],
         image:{
             src: "/images/kyora.png",
@@ -109,7 +109,7 @@ export const questions: Question[] = [
         options: [
             {text: "Strongly agree", effects: {calm: 2, loyalty: 1, curiosity: 1}},
             {text: "Agree", effects: { calm: 1, emotional: 1}},
-            {text: "disagree", effects: { bravery: 1, playfulness: 1}},
+            {text: "Disagree", effects: { bravery: 1, playfulness: 1}},
             {text: "Strongly disagree", effects: { bravery: 1, mischief: 2}},
         ],
         image:{
@@ -139,7 +139,7 @@ export const questions: Question[] = [
         options: [
             {text: "Strongly agree", effects: {emotional: 2, loyalty: 2}},
             {text: "Agree", effects: { emotional: 1, loyalty: 1}},
-            {text: "disagree", effects: { calm: 1, bravery: 1, curiosity: 1}},
+            {text: "Disagree", effects: { calm: 1, bravery: 1, curiosity: 1}},
             {text: "Strongly disagree", effects: { mischief: 1, bravery: 1, curiosity: 2}},
         ],
         image:{

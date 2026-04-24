@@ -17,10 +17,10 @@ type Props = {
 export default function ResultCard({ result }: Props) {
   return (
     <div style={{ marginTop: "2rem" }}>
-      <h2>You got: {result.character.name} 🎉</h2>
+      <h2 className="text-2xl md:text-3xl font-bold leading-snug text-gray-800 mb-6">You got: {result.character.name} </h2>
       <p>{result.character.description}</p>
 
-      <h3>You traits</h3>
+      {/* <h3 className="text-2xl md:text-3xl font-bold leading-snug text-gray-800 mb-6">You traits</h3>
 
       
       <ul>
@@ -28,19 +28,10 @@ export default function ResultCard({ result }: Props) {
             <li key={trait}>
                 {trait}: {value}
             </li>
-            // <Image 
-            //                     src = {question.image.src}
-            //                     alt = {question.text}
-            //                     width={500}
-            //                     height={500}
-                                
-            //                     onLoad={()=>(setImageLoaded(true))}
-            //                     style={{borderRadius: "12px", objectFit: "cover"}}
-            //                     className="object-cover"
-            //                 />
+            
             
         ))}
-      </ul>
+      </ul> */}
       <Image
         src = {result.character.image?.src}
         alt ={result.character.image?.alt}

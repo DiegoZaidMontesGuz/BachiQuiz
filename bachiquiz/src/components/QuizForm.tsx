@@ -7,19 +7,22 @@ import ResultCard from "./ResultCard";
 
 export default function QuizForm() {
   const [currentQuestion, setCurrentQuestion] = useState(0)
-  const [answers, setAnswers] = useState<Record<string, number>>({});
+  const [answers, setAnswers] = useState<Record<number, number>>({});
   const [result, setResult] = useState<any>(null);
   const [loading, setLoading] = useState(false);
   const [imageLoaded, setImageLoaded] = useState(false);
 
   const [removeOptions, setRemovedOptions] = useState<Record<number, number[]>>({});
   const question = questions[currentQuestion];
-  const selectAnswer = answers[question.id]
+  const selectAnswer = answers[question.id];
   
+const [mounted, setMounted] = useState(false);
 
 useEffect(() => {
-  setImageLoaded(false);
-}, [currentQuestion]);
+  setMounted(true);
+}, []);
+
+if (!mounted) return null;
 
   function handleSelect(optionIndex: number) {
 
@@ -69,7 +72,7 @@ useEffect(() => {
   }
 
   function handleNext(){
-    if(selectAnswer === undefined) return;
+    if (selectAnswer === null) return;
 
     if(currentQuestion < questions.length - 1){
         setCurrentQuestion((prev) => prev + 1);
@@ -80,9 +83,10 @@ useEffect(() => {
 
   if (result) {
     return (
-      <div>
+      <div className="text-2xl md:text-3xl font-bold leading-snug text-gray-800 mb-6">
         <ResultCard result={result} />
         <button
+            className="block mx-auto cursor-pointer p-4 transition-all border-red-300 bg-red hover:border-red-400 hover:bg-red-50"
             onClick={() => {
                 setResult(null);
                 setAnswers({});
@@ -103,18 +107,29 @@ useEffect(() => {
         <h2 className="text-2xl md:text-3xl font-bold leading-snug text-gray-800 mb-6 ">{question.text} </h2>
 
         {question.image && (
-            <div style={{marginBottom: "1rem", order: 3}} >
-                <Image 
-                    src = {question.image.src}
-                    alt = {question.text}
-                    width={500}
-                    height={500}
-                    
-                    onLoad={()=>(setImageLoaded(true))}
-                    style={{borderRadius: "12px", objectFit: "cover"}}
-                    className="object-cover"
-                />
-            </div>
+            <>
+              <div style={{marginBottom: "1rem", order: 3}} >
+                  <Image 
+                      src = {question.image.src}
+                      alt = {question.text}
+                      width={500}
+                      height={500}
+                      
+                      onLoad={()=>(setImageLoaded(true))}
+                      style={{borderRadius: "12px", objectFit: "cover"}}
+                      className="object-cover"
+                  />
+              </div>
+
+              {/* {!imageLoaded && (
+                <div style={{
+                  width: 500, height: 500,
+                  background: "#f0f0f0",
+                  borderRadius: "12px",
+                order: 3
+                }} />
+              )} */}
+            </>
         )}
 
         <div style={{order: 1}}>
@@ -138,7 +153,7 @@ useEffect(() => {
             name={`question-${question.id}`}
             checked={selectAnswer === index}
             onChange={() => handleSelect(index)}
-            className="hidden"
+            className="sr-only"
           />
 
           <span className="text-base font-medium text-gray-800">
@@ -153,11 +168,9 @@ useEffect(() => {
       
         <button
             onClick={handleNext}
-            disabled={selectAnswer == undefined || loading}
+            disabled={selectAnswer === undefined || loading}
             style={{marginTop: "1rem", order: 2}}
-            className={`block cursor-pointer p-4 transition-all ${
-              "border-red-300 bg-red hover:border-red-400 hover:bg-red-50"
-         }`}
+            className="block w-full cursor-pointer p-4 transition-all border-red-300 bg-red hover:border-red-400 hover:bg-red-50"
         >
           
           {currentQuestion === questions.length -1
