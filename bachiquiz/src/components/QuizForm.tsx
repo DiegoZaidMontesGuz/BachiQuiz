@@ -80,10 +80,10 @@ if (!mounted) return null;
 
   if (result) {
     return (
-      <div className="text-2xl md:text-3xl font-bold leading-snug text-gray-800 mb-6">
+      <div className="text-2xl md:text-3xl font-bold leading-snug text-gray-800 mb-6 dark:text-gray-100">
         <ResultCard result={result} />
         <button
-            className="block mx-auto cursor-pointer p-4 transition-all border-red-300 bg-red hover:border-red-400 hover:bg-red-50"
+            className="block mx-auto cursor-pointer p-4 transition-all border-red-800 bg-red hover:border-red-800 hover:bg-red-500 "
             onClick={() => {
                 setResult(null);
                 setAnswers({});
@@ -103,11 +103,11 @@ if (!mounted) return null;
       transition: "opacity 0.1s ease-in" 
     }}>
     
-        <h3 className="text-2xl md:text-3xl font-bold leading-snug text-gray-800 mb-6 ">
+        <h3 className="text-2xl md:text-3xl font-bold leading-snug text-gray-800 mb-6 dark:text-gray-100">
            {currentQuestion + 1} / {questions.length}
         </h3>
 
-        <h2 className="text-2xl md:text-3xl font-bold leading-snug text-gray-800 mb-6 ">{question.text} </h2>
+        <h2 className="text-2xl md:text-3xl font-bold leading-snug text-gray-800 mb-6 dark:text-gray-100">{question.text} </h2>
 
         {question.image && (
             <div style={{marginBottom: "1rem", order: 3}} >
@@ -133,8 +133,8 @@ if (!mounted) return null;
                 key={index}
                 className={`block cursor-pointer p-4 transition-all ${
                   selectAnswer === index
-                    ? "border-blue-600 bg-red-200 shadow-sm"
-                    : "border-red-300 bg-red hover:border-red-400 hover:bg-red-50"
+                    ? "border-blue-600 bg-red-500 shadow-sm"
+                    : "border-red-300 bg-red hover:border-red-400 hover:bg-red-200"
                 }`}
               >
                 <input
@@ -144,7 +144,7 @@ if (!mounted) return null;
                   onChange={() => handleSelect(index)}
                   className="sr-only"
                 />
-                <span className="text-base font-medium text-gray-800">{opt.text}</span>
+                <span className="text-base font-medium text-gray-800 dark:text-gray-100">{opt.text}</span>
               </label>
             );
           })}
@@ -154,7 +154,7 @@ if (!mounted) return null;
             onClick={handleNext}
             disabled={selectAnswer === undefined || loading}
             style={{marginTop: "1rem", order: 2}}
-            className="block w-full cursor-pointer p-4 transition-all border-red-300 bg-red hover:border-red-400 hover:bg-red-50"
+            className="block w-full cursor-pointer p-4 transition-all border-red-800 bg-red hover:border-red-400 hover:bg-red-200"
         >
           {currentQuestion === questions.length - 1 ? "Finish" : "Next"}
         </button>

@@ -17,7 +17,7 @@ type Props = {
 export default function ResultCard({ result }: Props) {
   return (
     <div style={{ marginTop: "2rem" }}>
-      <h2 className="text-2xl md:text-3xl font-bold leading-snug text-gray-800 mb-6">You got: {result.character.name} </h2>
+      <h2 className="text-2xl md:text-3xl font-bold leading-snug text-gray-800 mb-6 dark:text-gray-100">You got: {result.character.name} </h2>
       <p>{result.character.description}</p>
 
       {/* <h3 className="text-2xl md:text-3xl font-bold leading-snug text-gray-800 mb-6">You traits</h3>
