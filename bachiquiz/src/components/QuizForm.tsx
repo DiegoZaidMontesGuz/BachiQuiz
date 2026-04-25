@@ -22,12 +22,18 @@ useEffect(() => {
   setMounted(true);
 }, []);
 
+useEffect(() => {
+  if (question.image) {
+    setImageLoaded(false);
+  } else {
+    setImageLoaded(true);
+  }
+}, [currentQuestion, question.image]);
+
 if (!mounted) return null;
 
   function handleSelect(optionIndex: number) {
-
     const isFakeQuestion = question.id === 16;
-
     if(isFakeQuestion && optionIndex === 0){
       setRemovedOptions((prev) => ({
         ...prev,
@@ -35,27 +41,19 @@ if (!mounted) return null;
       }));
       return;
     }
-
     setAnswers((prev) => ({
       ...prev,
       [question.id]: optionIndex,
     }));
   }
 
-  
-
   async function handleSubmit(finalAnswers: Record<number, number>) {
     setLoading(true);
-
-    // Convert selected answers into trait scores
     const traitTotals: Record<string, number> = {};
-
     questions.forEach((q) => {
       const selectedIndex = answers[q.id];
       if (selectedIndex === undefined) return;
-
       const effects = q.options[selectedIndex].effects;
-
       Object.entries(effects).forEach(([trait, value]) => {
         traitTotals[trait] = (traitTotals[trait] || 0) + (value || 0);
       });
@@ -72,8 +70,7 @@ if (!mounted) return null;
   }
 
   function handleNext(){
-    if (selectAnswer === null) return;
-
+    if (selectAnswer === undefined) return; // Fixed null check to undefined to match your state
     if(currentQuestion < questions.length - 1){
         setCurrentQuestion((prev) => prev + 1);
     } else{
@@ -91,6 +88,7 @@ if (!mounted) return null;
                 setResult(null);
                 setAnswers({});
                 setCurrentQuestion(0);
+                setRemovedOptions({});
             }}
         >Try Again</button>
       </div>
@@ -98,92 +96,70 @@ if (!mounted) return null;
   }
 
   return (
-    <div style={{display: "flex", flexDirection: "column"}}>
+    <div style={{ 
+      display: "flex", 
+      flexDirection: "column", 
+      opacity: imageLoaded ? 1 : 0,
+      transition: "opacity 0.1s ease-in" 
+    }}>
+    
         <h3 className="text-2xl md:text-3xl font-bold leading-snug text-gray-800 mb-6 ">
            {currentQuestion + 1} / {questions.length}
         </h3>
 
-      
         <h2 className="text-2xl md:text-3xl font-bold leading-snug text-gray-800 mb-6 ">{question.text} </h2>
 
         {question.image && (
-            <>
-              <div style={{marginBottom: "1rem", order: 3}} >
-                  <Image 
-                      src = {question.image.src}
-                      alt = {question.text}
-                      width={500}
-                      height={500}
-                      
-                      onLoad={()=>(setImageLoaded(true))}
-                      style={{borderRadius: "12px", objectFit: "cover"}}
-                      className="object-cover"
-                  />
-              </div>
-
-              {/* {!imageLoaded && (
-                <div style={{
-                  width: 500, height: 500,
-                  background: "#f0f0f0",
-                  borderRadius: "12px",
-                order: 3
-                }} />
-              )} */}
-            </>
+            <div style={{marginBottom: "1rem", order: 3}} >
+                <Image 
+                    src = {question.image.src}
+                    alt = {question.text}
+                    width={500}
+                    height={500}
+                    priority // This tells Next.js to load this image immediately
+                    onLoad={() => setImageLoaded(true)}
+                    style={{borderRadius: "12px", objectFit: "cover"}}
+                    className="object-cover"
+                />
+            </div>
         )}
 
         <div style={{order: 1}}>
-
           {question.options.map((opt, index) => {
-
-          const isRemoved = removeOptions[question.id]?.includes(index);
-          if(isRemoved) return null;
-
-          return(
-          <label
-            key={index}
-            className={`block cursor-pointer p-4 transition-all ${
-              selectAnswer === index
-                ? "border-blue-600 bg-red-200 shadow-sm"
-                : "border-red-300 bg-red hover:border-red-400 hover:bg-red-50"
-          }`}
-          >
-          <input
-            type="radio"
-            name={`question-${question.id}`}
-            checked={selectAnswer === index}
-            onChange={() => handleSelect(index)}
-            className="sr-only"
-          />
-
-          <span className="text-base font-medium text-gray-800">
-            {opt.text}
-          </span>
-          </label>
-          );
-        })}
-
+            const isRemoved = removeOptions[question.id]?.includes(index);
+            if(isRemoved) return null;
+            return(
+              <label
+                key={index}
+                className={`block cursor-pointer p-4 transition-all ${
+                  selectAnswer === index
+                    ? "border-blue-600 bg-red-200 shadow-sm"
+                    : "border-red-300 bg-red hover:border-red-400 hover:bg-red-50"
+                }`}
+              >
+                <input
+                  type="radio"
+                  name={`question-${question.id}`}
+                  checked={selectAnswer === index}
+                  onChange={() => handleSelect(index)}
+                  className="sr-only"
+                />
+                <span className="text-base font-medium text-gray-800">{opt.text}</span>
+              </label>
+            );
+          })}
         </div>
         
-      
         <button
             onClick={handleNext}
             disabled={selectAnswer === undefined || loading}
             style={{marginTop: "1rem", order: 2}}
             className="block w-full cursor-pointer p-4 transition-all border-red-300 bg-red hover:border-red-400 hover:bg-red-50"
         >
-          
-          {currentQuestion === questions.length -1
-                ? "Finish"
-                : "Next"}
+          {currentQuestion === questions.length - 1 ? "Finish" : "Next"}
         </button>
 
-      
-
       {loading && <p>Calculating...</p>}
-
-      
     </div>
-    
   );
 }
